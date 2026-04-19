@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Data (CIFAR-10 auto-download di server)
+data/
+
+# Hasil eksperimen (generate ulang di server)
+mlruns/
+results/all_hpo_results.json
+results/best_configs.json
+results/final_training.json
+results/final_model.pth
+results/figures/
+results/tables/
+
+# Log
+*.log
+run_all_hpo.err
+run_all_hpo.out
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store

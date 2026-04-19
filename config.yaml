@@ -1,0 +1,50 @@
+# Konfigurasi proyek HPO CIFAR-10
+project_name: "HPO-CIFAR10-ExperimentManager"
+seed: 42
+
+data:
+  root: "./data"
+  num_classes: 10
+  val_size: 5000      # diambil dari 50k training
+  num_workers: 0
+  train_subset: 10000  # subset training set utk HPO (percepat di CPU). null = pakai semua
+
+training:
+  epochs_per_trial: 5    # budget sangat ringan (CPU only)
+  final_epochs: 20
+  early_stopping_patience: 3
+
+search_space:
+  learning_rate:
+    type: "loguniform"
+    low: 1.0e-4
+    high: 1.0e-1
+    grid: [0.001, 0.01]
+  batch_size:
+    type: "categorical"
+    choices: [64, 128]
+    grid: [128]
+  optimizer:
+    type: "categorical"
+    choices: ["sgd", "adam", "rmsprop"]
+    grid: ["adam", "sgd"]
+  dropout:
+    type: "uniform"
+    low: 0.1
+    high: 0.5
+    grid: [0.25, 0.4]
+  base_filters:
+    type: "categorical"
+    choices: [16, 32, 64]
+    grid: [32]
+
+hpo_budgets:
+  grid_search: null         # otomatis dari grid cartesian (= 2*1*2*2*1 = 8)
+  random_search: 8
+  bayesian_tpe: 8
+  hyperband_asha: 10
+  genetic: {population: 4, generations: 2}
+
+mlflow:
+  tracking_uri: "./mlruns"
+  experiment_prefix: "HPO"
