@@ -6,12 +6,12 @@ data:
   root: "./data"
   num_classes: 10
   val_size: 5000      # diambil dari 50k training
-  num_workers: 0
-  train_subset: 10000  # subset training set utk HPO (percepat di CPU). null = pakai semua
+  num_workers: 8
+  train_subset: null  # GPU L40S: pakai full 45k
 
 training:
-  epochs_per_trial: 5    # budget sangat ringan (CPU only)
-  final_epochs: 20
+  epochs_per_trial: 8
+  final_epochs: 25
   early_stopping_patience: 3
 
 search_space:
